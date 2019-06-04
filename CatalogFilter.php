@@ -3,22 +3,22 @@
 $filter = array();
 
 //Radio, Select & Text Fields Type
-if($_GET['floor']) {
-    $filter[] = 'floor='.$_GET['floor'];
-}
+// if($_GET['floor']) {
+//     $filter[] = 'floor='.$_GET['floor'];
+// }
 
 //Two Text Fields From To
-if($_GET['area_from']) {
-    $filter[] = 'area>='.$_GET['area_from'];
+if($_GET['price_from']) {
+    $filter[] = 'price>='.$_GET['price_from'];
 }
-if($_GET['area_to']) {
-    $filter[] = 'area<='.$_GET['area_to'];
+if($_GET['price_to']) {
+    $filter[] = 'price<='.$_GET['price_to'];
 }
 
 //Checkbox Type
-if($_GET['garage']) {
-    $filter[] = 'garage=1';
-}
+// if($_GET['garage']) {
+//     $filter[] = 'garage=1';
+// }
 
 //End Settings
 
@@ -57,7 +57,7 @@ $params_count = array(
     'where' => $where
 );
 
-$count = $modx->runSnippet('pdoResources',$params_count);
+$count = $modx->runSnippet('msProducts',$params_count);
 $count = count(explode(',',$count))-1;
 $modx->setPlaceholder('count',$count);
 
@@ -82,4 +82,4 @@ if($more > 0){
     $button = '<div class="ajax-filter-count" data-count="'.$count.'"><a href="#" class="ajax-more">Загрузить еще '.$lim.' из '.$more.'</a></div>';
 }
 
-return $modx->runSnippet('pdoResources',$params).$button;
+return $modx->runSnippet('msProducts',$params).$button;
