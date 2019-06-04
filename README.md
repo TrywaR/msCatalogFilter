@@ -1,4 +1,4 @@
-# CatalogFilter
+# msCatalogFilter
 Для работы нид pdoTools и minishop2
 
 Поехали:
