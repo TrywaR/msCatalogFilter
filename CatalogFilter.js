@@ -36,11 +36,15 @@ $(function() {
 
     $(ajaxContainerSelector).on('click', '.ajax-more', function(e) {
         e.preventDefault();
+
+        $('.ajax-container').addClass('_loading_');
+
         var offset = $(ajaxItemSelector).length;
         $.ajax({
             data: $(ajaxFormSelector).serialize()+'&offset='+offset
         }).done(function(response) {
             $('.ajax-more').remove();
+            $('.ajax-container').removeClass('_loading_');
             var $response = $(response);
             $response.find(ajaxItemSelector).hide();
             $(ajaxContainerSelector).append($response.find(ajaxContainerSelector).html());
