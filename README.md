@@ -1,5 +1,5 @@
 # CatalogFilter
-[ MODX Revo > PDOTols > Resource filter ]
+Для работы нид pdoTools и minishop2
 
 Поехали:
 
