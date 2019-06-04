@@ -1,7 +1,12 @@
 # CatalogFilter
 [ MODX Revo > PDOTols > Resource filter ]
 
-Вызов
+Поехали:
+
+* создаём сниппет _CatalogFilter_ и пихаем в него код из файла _CatalogFilter.php_
+* Подключаем к документу скрипт из файла _CatalogFilter.js_
+
+Вызываем сниппет 
 ```
 [[!catalogFilter?
   &tpl=`tpl`
