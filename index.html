@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>msCatalogFilter</title>
+</head>
+<body>
+  <!-- Форма фильтрации -->
+  <form class="ajax-form">
+
+    <!-- Sort Fields -->
+    <input type="hidden" name="sortby" value="pagetitle">
+    <input type="hidden" name="sortdir" value="asc">
+    <!-- Sort End -->
+
+    <label>
+      <input type="checkbox" name="garage"> Checkbox
+    </label>
+
+    <label>
+      <input name="floor" value="0" checked="" type="radio">
+      <input name="floor" value="1" type="radio">
+      <input name="floor" value="2" type="radio">
+    </label>
+
+    <label><input type="text" name="price"></label>
+
+    <button class="ajax-reset btn">
+      Сбросить
+    </button>
+
+    <button class="ajax-start btn btn-primary">
+      Фильтровать
+    </button>
+  </form>
+  <!-- Форма фильтрации х-->
+
+  <!-- Блок со списком элементов -->
+  <div class="cooler_block ajax-container">
+    [[!catalogFilter?
+      &tpl=`filter-item`
+      &limit=`8`
+      &parents=`[[*id]]`
+      &fields=`price`
+      &sortby=`menuindex`
+      &sortdir=`ASC`
+    ]]
+  </div>
+  <!-- Блок со списком элементов х-->
+
+  <!-- Пример элемента (filter-item) -->
+  <div class="ms2_product filter-item ajax-item">
+    <form method="post" class="ms2_form d-flex flex-column flex-md-row align-items-center no-gutters">
+      <input type="hidden" name="id" value="{$id}">
+      <input type="hidden" name="count" value="1">
+      <input type="hidden" name="options" value="[]">
+
+    	<div class="_photo">
+        {if $thumb?}
+            <img src="{$thumb}" class="mw-100" alt="{$pagetitle}" title="{$pagetitle}"/>
+        {else}
+            <img src="{'assets_url' | option}components/minishop2/img/web/ms2_small.png"
+                 srcset="{'assets_url' | option}components/minishop2/img/web/ms2_small@2x.png 2x"
+                 class="mw-100" alt="{$pagetitle}" title="{$pagetitle}"/>
+        {/if}
+    	</div>
+
+    	<div class="_text">
+    		<div class="_info">
+    			<a href="[[~[[+id]]]]" title="[[+longtitle]]">
+    				<h2>
+    					[[+pagetitle]]
+    				</h2>
+    			</a>
+
+    			[[-+tv.descr]]
+    		</div>
+
+        <div class="_price">
+          <span class="price ml-md-3">{$price} {'ms2_frontend_currency' | lexicon}</span>
+          {if $old_price?}
+          <span class="old_price ml-md-3">{$old_price} {'ms2_frontend_currency' | lexicon}</span>
+          {/if}
+        </div>
+
+    		<div class="_buttons">
+          <button class="btn btn-primary" name="ms2_action" value="cart/add">
+            Добавить в корзину
+          </button>
+    		</div>
+    	</div>
+    </form>
+  </div>
+  <!-- Пример элемента (filter-item) x-->
+</body>
+</html>
