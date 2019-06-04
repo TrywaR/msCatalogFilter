@@ -6,6 +6,7 @@
 
 $(function(){
   // price_slider
+  var min_value = 0;
   var max_value = 100000;
   $( "#price_slider" ).slider({
     values: [ 0, max_value ],
@@ -27,5 +28,9 @@ $(function(){
   function updatePriceSliderValue(e) {
     $('#price_slider').slider('option', 'values', [ $('#filter_price_from').val(), $('#filter_price_to').val() ]);
   }
+
+  $(document).on('click', '.ajax-reset', function() {
+    $('#price_slider').slider('option', 'values', [ min_value, max_value ]);
+  })
   // price_slider x
 })
