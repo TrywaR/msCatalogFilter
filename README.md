@@ -35,3 +35,6 @@ ajaxFormButtonStart   = '.ajax-start', // CSS Selector of Button Start Filtering
 
 ## Подключение jQuery UI slider
 Необходимый код в jQueryUISlider.js запихать туда куда сочтёте нужным (:
+
+## html
+Если трудности с пониманием html, то пример в _index.html_ разбит на кусски с комментами
