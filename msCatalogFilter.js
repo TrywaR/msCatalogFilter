@@ -24,7 +24,7 @@ $(function() {
     function ajaxMainFunction() {
         $('.ajax-container').addClass('_loading_');
         $.ajax({
-            data: JSON.stringify($(ajaxFormSelector).serialize())
+            data: $(ajaxFormSelector).serialize()
         }).done(function(response) {
             $('.ajax-container').removeClass('_loading_');
             var $response = $(response);
