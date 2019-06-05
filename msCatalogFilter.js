@@ -24,7 +24,7 @@ $(function() {
     function ajaxMainFunction() {
         $('.ajax-container').addClass('_loading_');
         $.ajax({
-            data: $(ajaxFormSelector).serialize()
+            data: JSON.stringify($(ajaxFormSelector).serialize())
         }).done(function(response) {
             $('.ajax-container').removeClass('_loading_');
             var $response = $(response);
@@ -68,7 +68,7 @@ $(function() {
         ajaxCount();
     })
 
-    $(''+ajaxFormSelector+' input').change(function() {
+    $(''+ajaxFormSelector+' input:not(.ajax-disabled)').change(function() {
         ajaxMainFunction();
     })
 

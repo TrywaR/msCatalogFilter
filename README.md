@@ -26,15 +26,12 @@
 ## Для работы Ajax нид
 Нужно чтобы были указаны все необходимые классы
 ```
-ajaxCountSelector     = '.ajax-count', // CSS Selector of Items Counter
-ajaxContainerSelector = '.ajax-container', // CSS Selector of Ajax Container
-ajaxItemSelector      = '.ajax-item', // CSS Selector of Ajax Item
-ajaxFormSelector      = '.ajax-form', // CSS Selector of Ajax Filter Form
-ajaxFormButtonStart   = '.ajax-start', // CSS Selector of Button Start Filtering
+ajaxContainerSelector = '.ajax-container', // Блок с результатами
+ajaxItemSelector      = '.ajax-item', // Элемент выдачи (tpl)
+ajaxFormSelector      = '.ajax-form', // Форма с фильтрами
+ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 ```
-
-## Подключение jQuery UI slider
-Необходимый код в jQueryUISlider.js запихать туда куда сочтёте нужным (:
+Класс _.ajax-disabled_ для _input_ отменяет его моментальную обработку при изменении его значения
 
 ## html
 Если трудности с пониманием html, то пример в _index.html_ разбит на кусски с комментами
@@ -49,3 +46,6 @@ ajaxFormButtonStart   = '.ajax-start', // CSS Selector of Button Start Filtering
 ```
 [[msMaxPrice? parents=`[[*id]]`]]
 ```
+
+## Подключение jQuery UI slider
+Необходимый код в jQueryUISlider.js запихать туда куда сочтёте нужным (:

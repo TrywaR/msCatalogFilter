@@ -10,6 +10,87 @@
   <!-- Форма фильтрации -->
   <form class="ajax-form">
 
+    <!-- Фильтрация по цене с jQuery UI slider -->
+    <div class="input_block">
+      <div class="_title">
+        Цена
+      </div>
+
+      <div id="price_slider">
+        <div id="price_slider_min">0</div>
+        <div id="price_slider_max">[[msMaxPrice]]</div>
+      </div>
+
+      <label for="filter_price_from">От</label>
+      <input class="ajax-disabled" id="filter_price_from" type="text" name="price_from" value="0">
+
+      <label for="filter_price_to">До</label>
+      <input class="ajax-disabled" id="filter_price_to" type="text" name="price_to" value="[[msMaxPrice]]">
+
+      <script>
+      $(function(){
+        // price_slider
+        var min_value = 0;
+        var max_value = [[msMaxPrice]];
+        $( "#price_slider" ).slider({
+          values: [ 0, max_value ],
+          max: max_value,
+          change: function( event, ui ) {
+            var values = $( "#price_slider" ).slider( "values" )
+            $('#filter_price_from').val(values[0])
+            $('#filter_price_to').val(values[1])
+            $('.ajax-start').click()
+          }
+        });
+
+        const filter_price_to = document.querySelector('#filter_price_to')
+        const filter_price_from = document.querySelector('#filter_price_from')
+
+        filter_price_to.addEventListener('input', updatePriceSliderValue)
+        filter_price_from.addEventListener('input', updatePriceSliderValue)
+
+        function updatePriceSliderValue(e) {
+          $('#price_slider').slider('option', 'values', [ $('#filter_price_from').val(), $('#filter_price_to').val() ]);
+        }
+
+        $(document).on('click', '.ajax-reset', function() {
+          $('#price_slider').slider('option', 'values', [ min_value, max_value ]);
+        })
+        // price_slider x
+      })
+      </script>
+    </div>
+    <!-- Фильтрация по цене с jQuery UI slider x-->
+
+    <!-- Фильтрация по нескольким производителям -->
+    <div class="input_block">
+      [[!pdoResources?
+        &class=`msVendor`
+        &tpl=`@INLINE
+          <input class="ajax-disabled" name="vendor" value="[[+id]]" type="checkbox">
+            [[+name]]
+          </input>`
+        &sortby=`name`
+        &sortdir=`ASC`
+      ]]
+    </div>
+    <input id="filter_vendors" type="hidden" name="vendors">
+
+    <script>
+      $(function(){
+        $(document).on('change', '[name="vendor"]', function(){
+          var vendors = ''
+          $('[name="vendor"]').each(function(){
+            if (this.checked)
+              vendors += ',' + $(this).val()
+          })
+          $('#filter_vendors').val(vendors.substring(1))
+          $('.ajax-start').click()
+        })
+      })
+    </script>
+    <!-- Фильтрация по нескольким производителям х-->
+
     <!-- Sort Fields -->
     <input type="hidden" name="sortby" value="pagetitle">
     <input type="hidden" name="sortdir" value="asc">

@@ -3,9 +3,9 @@
 $filter = array();
 
 //Radio, Select & Text Fields Type
-// if($_GET['floor']) {
-//     $filter[] = 'floor='.$_GET['floor'];
-// }
+if($_GET['floor']) {
+    $filter[] = 'floor='.$_GET['floor'];
+}
 
 //Two Text Fields From To
 if($_GET['price_from']) {
@@ -15,10 +15,15 @@ if($_GET['price_to']) {
     $filter[] = 'price<='.$_GET['price_to'];
 }
 
+// if need more one checkbox
+if($_GET['vendors']) {
+  $filter[] = "vendor IN (".$_GET['vendors'].")";
+}
+
 //Checkbox Type
-// if($_GET['garage']) {
-//     $filter[] = 'garage=1';
-// }
+if($_GET['garage']) {
+    $filter[] = 'garage=1';
+}
 
 //End Settings
 
