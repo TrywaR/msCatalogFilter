@@ -48,4 +48,4 @@ ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 ```
 
 ## Подключение jQuery UI slider
-Необходимый код в jQueryUISlider.js запихать туда куда сочтёте нужным (:
+Необходимый код есть в index.html и отдельно в jQueryUISlider.js запихать туда куда сочтёте нужным (:
