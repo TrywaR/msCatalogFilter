@@ -53,4 +53,4 @@ ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 ## Если используется TV checkbox
 
 для того чтобы вывести возможные значения можно воспользоватся кодом из TVsSelectValues.php
-Он <strike>нагло сп</strike> скромно взят с замечательного блога [[http://mycode.in.ua/modx/snippets/list-tv-elements.html mycode.in.ua]]
+Он <strike>нагло сп</strike> скромно взят с замечательного блога [http://mycode.in.ua/modx/snippets/list-tv-elements.html mycode.in.ua]
