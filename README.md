@@ -49,3 +49,8 @@ ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 
 ## Подключение jQuery UI slider
 Необходимый код есть в index.html и отдельно в jQueryUISlider.js запихать туда куда сочтёте нужным (:
+
+## Если используется TV checkbox
+
+для того чтобы вывести возможные значения можно воспользоватся кодом из TVsSelectValues.php
+Он -нагло сп- скромно взят с замечательного блога http://mycode.in.ua/modx/snippets/list-tv-elements.html
