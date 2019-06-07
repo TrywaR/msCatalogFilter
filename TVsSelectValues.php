@@ -24,6 +24,9 @@
 //   &strict=`0`
 // ]]
 
+// tpl.optionList
+// <option value="[[+value]]" [[+active]]>[[+name]] ([[+count]])</option>
+
 $output = '';
 $tv = $modx->getOption('tv', $scriptProperties, 'list');
 $tpl = $modx->getOption('tpl', $scriptProperties, '');
