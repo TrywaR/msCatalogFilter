@@ -26,6 +26,12 @@
 
 // tpl.optionList
 // <option value="[[+value]]" [[+active]]>[[+name]] ([[+count]])</option>
+// --
+// <label class="input_block_item">
+//   <input class="ajax-disabled" name="tv_name" value="[[+name]]" type="checkbox"/>
+//   [[+name]]
+// </label>
+
 
 $output = '';
 $tv = $modx->getOption('tv', $scriptProperties, 'list');

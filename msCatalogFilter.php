@@ -20,6 +20,11 @@ if($_GET['vendors']) {
   $filter[] = "vendor IN (".$_GET['vendors'].")";
 }
 
+// if need more TV checkbox like text
+if($_GET['tv_names']) {
+  $filter[] = "tv_name IN (".$_GET['tv_names'].")";
+}
+
 //Checkbox Type
 if($_GET['garage']) {
     $filter[] = 'garage=1';

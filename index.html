@@ -91,6 +91,36 @@
     </script>
     <!-- Фильтрация по нескольким производителям х-->
 
+    <!-- Фильтрация по нескольким TV checkbox (текстом) -->
+    <div class="input_block">
+      <div class="_title">
+        Тип установки
+      </div>
+
+      [[!catalogFilterTVValues?
+        &tv=`type_installation`
+        &tpl=`catalogFilterTVValue`
+      ]]
+
+      <script>
+        $(function(){
+          $(document).on('change', '[name="tv_name"]', function(){
+            var type_installations = ''
+            $('[name="tv_name"]').each(function(){
+              if (this.checked)
+                type_installations += ',"' + $(this).val() + '"'
+            })
+            console.log(type_installations)
+            $('#tv_names').val(type_installations.substring(1))
+            $('.ajax-start').click()
+          })
+        })
+      </script>
+
+      <input id="tv_names" type="hidden" name="tv_names" value="">
+    </div>
+    <!-- Фильтрация по нескольким TV checkbox x-->
+
     <!-- Sort Fields -->
     <input type="hidden" name="sortby" value="pagetitle">
     <input type="hidden" name="sortdir" value="asc">
