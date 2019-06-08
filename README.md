@@ -6,11 +6,11 @@
 * создаём сниппет _CatalogFilter_ и пихаем в него код из файла _CatalogFilter.php_
 * Подключаем к документу скрипт из файла _CatalogFilter.js_
 
-В начале файла _CatalogFilter.php_ необходимо указать TV полня и name полей которые используются для сортировки
+В начале файла _CatalogFilter.php_ необходимо указать TV поля и name полей которые используются для сортировки
 
 Вызываем сниппет
 ```
-[[!catalogFilter?
+[[!msCatalogFilter?
   &tpl=`tpl`
   &limit=`8`
   &parents=`[[*id]]`
