@@ -10,123 +10,164 @@
   <!-- Форма фильтрации -->
   <form class="ajax-form">
 
+    <!-- Скрытие и раскрытие содержимого фильтров для удобства, с сохранением в локальное хранилище -->
+    <script>
+      $(function(){
+        $(document).on('click', '.ajax-form .input_block:not(._not_hide_) ._title', function(el){
+          $(this).parents('.input_block').toggleClass('_hide_')
+
+          var this_input_block_index = 'input_block_'+$(this).parents('.input_block').index()
+
+          if (localStorage.getItem(this_input_block_index) > 0)
+            localStorage.setItem(this_input_block_index, 0)
+          else
+            localStorage.setItem(this_input_block_index, 1)
+        })
+
+        $('.ajax-form .input_block:not(._not_hide_)').each(function(){
+          var this_input_block_index = 'input_block_'+$(this).index()
+
+          if (localStorage.getItem(this_input_block_index) > 0)
+            $(this).removeClass('_hide_')
+        })
+      })
+    </script>
+    <!-- Скрытие и раскрытие содержимого фильтров для удобства, с сохранением в локальное хранилище х-->
+
     <!-- Фильтрация по цене с jQuery UI slider -->
-    <div class="input_block">
+    <div class="input_block _hide_">
       <div class="_title">
         Цена
       </div>
 
-      <div id="price_slider">
-        <div id="price_slider_min">0</div>
-        <div id="price_slider_max">[[msMaxPrice]]</div>
-      </div>
+      <div class="_values">
+        <div id="price_slider">
+          <div id="price_slider_min">0</div>
+          <div id="price_slider_max">[[msMaxPrice]]</div>
+        </div>
 
-      <label for="filter_price_from">От</label>
-      <input class="ajax-disabled" id="filter_price_from" type="text" name="price_from" value="0">
+        <label for="filter_price_from">От</label>
+        <input class="ajax-disabled" id="filter_price_from" type="text" name="price_from" value="0">
 
-      <label for="filter_price_to">До</label>
-      <input class="ajax-disabled" id="filter_price_to" type="text" name="price_to" value="[[msMaxPrice]]">
+        <label for="filter_price_to">До</label>
+        <input class="ajax-disabled" id="filter_price_to" type="text" name="price_to" value="[[msMaxPrice]]">
 
-      <script>
-      $(function(){
-        // price_slider
-        var min_value = 0;
-        var max_value = [[msMaxPrice]];
-        $( "#price_slider" ).slider({
-          values: [ 0, max_value ],
-          max: max_value,
-          change: function( event, ui ) {
-            var values = $( "#price_slider" ).slider( "values" )
-            $('#filter_price_from').val(values[0])
-            $('#filter_price_to').val(values[1])
-            $('.ajax-start').click()
+        <script>
+        $(function(){
+          // price_slider
+          var min_value = 0;
+          var max_value = [[msMaxPrice]];
+          $( "#price_slider" ).slider({
+            values: [ 0, max_value ],
+            max: max_value,
+            change: function( event, ui ) {
+              var values = $( "#price_slider" ).slider( "values" )
+              $('#filter_price_from').val(values[0])
+              $('#filter_price_to').val(values[1])
+              $('.ajax-start').click()
+            }
+          });
+
+          const filter_price_to = document.querySelector('#filter_price_to')
+          const filter_price_from = document.querySelector('#filter_price_from')
+
+          filter_price_to.addEventListener('input', updatePriceSliderValue)
+          filter_price_from.addEventListener('input', updatePriceSliderValue)
+
+          function updatePriceSliderValue(e) {
+            $('#price_slider').slider('option', 'values', [ $('#filter_price_from').val(), $('#filter_price_to').val() ]);
           }
-        });
 
-        const filter_price_to = document.querySelector('#filter_price_to')
-        const filter_price_from = document.querySelector('#filter_price_from')
-
-        filter_price_to.addEventListener('input', updatePriceSliderValue)
-        filter_price_from.addEventListener('input', updatePriceSliderValue)
-
-        function updatePriceSliderValue(e) {
-          $('#price_slider').slider('option', 'values', [ $('#filter_price_from').val(), $('#filter_price_to').val() ]);
-        }
-
-        $(document).on('click', '.ajax-reset', function() {
-          $('#price_slider').slider('option', 'values', [ min_value, max_value ]);
+          $(document).on('click', '.ajax-reset', function() {
+            $('#price_slider').slider('option', 'values', [ min_value, max_value ]);
+          })
+          // price_slider x
         })
-        // price_slider x
-      })
-      </script>
+        </script>
+      </div>
     </div>
     <!-- Фильтрация по цене с jQuery UI slider x-->
 
     <!-- Фильтрация по нескольким производителям -->
-    <div class="input_block">
-      [[!pdoResources?
-        &class=`msVendor`
-        &tpl=`@INLINE
-          <input class="ajax-disabled" name="vendor" value="[[+id]]" type="checkbox">
-            [[+name]]
-          </input>`
-        &sortby=`name`
-        &sortdir=`ASC`
-      ]]
-    </div>
-    <input id="filter_vendors" type="hidden" name="vendors">
+    <div class="input_block _hide_">
+      <div class="_values">
+        [[!pdoResources?
+          &class=`msVendor`
+          &tpl=`@INLINE
+            <input class="ajax-disabled" name="vendor" value="[[+id]]" type="checkbox">
+              [[+name]]
+            </input>`
+          &sortby=`name`
+          &sortdir=`ASC`
+        ]]
+        <input id="filter_vendors" type="hidden" name="vendors">
 
-    <script>
-      $(function(){
-        $(document).on('change', '[name="vendor"]', function(){
-          var vendors = ''
-          $('[name="vendor"]').each(function(){
-            if (this.checked)
-              vendors += ',' + $(this).val()
-          })
-          $('#filter_vendors').val(vendors.substring(1))
-          $('.ajax-start').click()
-        })
-      })
-    </script>
-    <!-- Фильтрация по нескольким производителям х-->
-
-    <!-- Фильтрация по нескольким TV checkbox (текстом) -->
-    <div class="input_block">
-      <div class="_title">
-        Тип установки
-      </div>
-
-      [[!catalogFilterTVValues?
-        &tv=`type_installation`
-        &tpl=`catalogFilterTVValue`
-      ]]
-
-      <script>
+        <script>
         $(function(){
-          $(document).on('change', '[name="tv_name"]', function(){
-            var type_installations = ''
-            $('[name="tv_name"]').each(function(){
+          $(document).on('change', '[name="vendor"]', function(){
+            var vendors = ''
+            $('[name="vendor"]').each(function(){
               if (this.checked)
-                type_installations += ',"' + $(this).val() + '"'
+              vendors += ',' + $(this).val()
             })
-            console.log(type_installations)
-            $('#tv_names').val(type_installations.substring(1))
+            $('#filter_vendors').val(vendors.substring(1))
             $('.ajax-start').click()
           })
         })
-      </script>
+        </script>
+      </div>
+    </div>
+    <!-- Фильтрация по нескольким производителям х-->
 
-      <input id="tv_names" type="hidden" name="tv_names" value="">
+    <!-- Фильтрация по нескольким TV checkbox (текстом) -->
+    <div class="input_block _hide_">
+      <div class="_title">
+        tv_name
+      </div>
+
+      <div class="_values">
+        [[!catalogFilterTVValues?
+          &tv=`type_installation`
+          &tpl=`catalogFilterTVValue`
+        ]]
+
+        <script>
+          $(function(){
+            $(document).on('change', '[name="tv_name"]', function(){
+              var type_installations = ''
+              $('[name="tv_name"]').each(function(){
+                if (this.checked)
+                  type_installations += ',"' + $(this).val() + '"'
+              })
+              console.log(type_installations)
+              $('#tv_names').val(type_installations.substring(1))
+              $('.ajax-start').click()
+            })
+          })
+        </script>
+
+        <input id="tv_names" type="hidden" name="tv_names" value="">
+      </div>
     </div>
     <!-- Фильтрация по нескольким TV checkbox x-->
+
+    <!-- Фильтрация товаров со скидкой (указанной старой ценой) -->
+    <div class="input_block _not_hide_">
+      <div class="_title">
+        <label class="input_block_item">
+          <input name="old_price" value="1" type="checkbox"/>
+          Скидки
+        </label>
+      </div>
+    </div>
+    <!-- Фильтрация товаров со скидкой (указанной старой ценой) х-->
 
     <!-- Sort Fields -->
     <input type="hidden" name="sortby" value="pagetitle">
     <input type="hidden" name="sortdir" value="asc">
     <!-- Sort End -->
 
-    <label>
+    <!-- <label>
       <input type="checkbox" name="garage"> Checkbox
     </label>
 
@@ -136,7 +177,7 @@
       <input name="floor" value="2" type="radio">
     </label>
 
-    <label><input type="text" name="price"></label>
+    <label><input type="text" name="price"></label> -->
 
     <button class="ajax-reset btn">
       Сбросить

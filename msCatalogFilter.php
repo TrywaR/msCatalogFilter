@@ -3,9 +3,9 @@
 $filter = array();
 
 //Radio, Select & Text Fields Type
-if($_GET['floor']) {
-    $filter[] = 'floor='.$_GET['floor'];
-}
+// if($_GET['floor']) {
+//     $filter[] = 'floor='.$_GET['floor'];
+// }
 
 //Two Text Fields From To
 if($_GET['price_from']) {
@@ -25,10 +25,15 @@ if($_GET['tv_names']) {
   $filter[] = "tv_name IN (".$_GET['tv_names'].")";
 }
 
-//Checkbox Type
-if($_GET['garage']) {
-    $filter[] = 'garage=1';
+// not empty old_price
+if($_GET['old_price']) {
+    $filter[] = 'old_price>0';
 }
+
+//Checkbox Type
+// if($_GET['garage']) {
+//     $filter[] = 'garage=1';
+// }
 
 //End Settings
 
