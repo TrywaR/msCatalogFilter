@@ -28,7 +28,7 @@
 // <option value="[[+value]]" [[+active]]>[[+name]] ([[+count]])</option>
 // --
 // <label class="input_block_item">
-//   <input class="ajax-disabled" name="tv_name" value="[[+name]]" type="checkbox"/>
+//   <input class="ajax-disabled" name="[[+tv_name]]" value="[[+name]]" type="checkbox"/>
 //   [[+name]]
 // </label>
 
@@ -60,6 +60,7 @@ foreach($elmts as $idx => $elmt){
     if(count($elmt) == 2){
         $value = $elmt[1];
     }
+    $modx->setPlaceholder("tv_name", $tv);
     $modx->setPlaceholder("name", $name);
     $modx->setPlaceholder("value", $value);
     $modx->setPlaceholder("idx", $idx+1);
