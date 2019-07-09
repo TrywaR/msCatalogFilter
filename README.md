@@ -47,7 +47,8 @@ ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 [[msMaxPrice? parents=`[[*id]]`]]
 ```
 
-## Подключение jQuery UI slider
+## Подключение jQuery UI slider (Ползунок для цен)
+Естетственно нужно подключить сам jQuery UI slider, его можно найти тут https://jqueryui.com/download/
 Необходимый код есть в index.html и отдельно в jQueryUISlider.js запихать туда куда сочтёте нужным (:
 
 ## Если используется TV checkbox
