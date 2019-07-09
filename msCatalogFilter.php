@@ -38,15 +38,17 @@ if($_GET['old_price']) {
 //End Settings
 
 //Sort
-if($_GET['sortby']) {
+$sortby = 'pagetitle';
+$sortdir = 'ASC';
+
+if($_GET['sortby'])
     $sortby = $_GET['sortby'];
-} else {
-    $sortby = 'pagetitle';
-}
-if($_GET['sortdir']) {
+if($_GET['sortdir'])
     $sortdir = $_GET['sortdir'];
-} else {
-    $sortdir = 'asc';
+
+if (isset($_SESSION['msCatalogFilter']['filter_data_sort'])) {
+  $sortby = $_SESSION['msCatalogFilter']['filter_data_sort'];
+  $sortdir = '';
 }
 //End Sort
 

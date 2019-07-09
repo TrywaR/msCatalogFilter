@@ -1,4 +1,57 @@
 $(function() {
+    // vendor
+    $(document).on('change', '[name="vendor"]', function(){
+      var vendors = ''
+      $('[name="vendor"]').each(function(){
+        if (this.checked)
+          vendors += ',' + $(this).val()
+      })
+      $('#filter_vendors').val(vendors.substring(1))
+      $('.ajax-start').click()
+    })
+    // vendor x
+
+    // sorting
+    // - Фильтрация по клику
+    $(document).find('#catalog_sort_block ._group_values ._value').on('click', function(){
+      // -- Подсвечиваем
+      $(this).addClass('_active_').siblings().removeClass('_active_')
+
+      // -- Подстваляем значение
+      $(this).parents('._group_values').find('input').val( $(this).data().srot_dir )
+
+      // -- Собираем параметры
+      filter_data_sort = '{'
+      $('#catalog_sort_block ._group_values input').each(function(i,el){
+        if (i > 0) filter_data_sort += ','
+        filter_data_sort += '"' + $(this).attr('name') + '":"' + $(this).val() + '"'
+      })
+      filter_data_sort += '}'
+
+      // -- Сохраняем в фильтр и в сессию
+      console.log(filter_data_sort)
+      $('#msCatalogFilterForm [name="sortby"]').val(filter_data_sort)
+      $.post('/msCatalogFilter', {'filter_data_sort': filter_data_sort}, function(){
+        // --- Фильтруем
+        $('.ajax-start').click()
+      })
+    })
+
+    // - Подсвечиваем активные кнопки из сессии
+    $.post('/msCatalogFilter', {'show':true}, function(filter_data_sort){
+      oFilter_data_sort = JSON.parse(filter_data_sort)
+      $.each(oFilter_data_sort, function(sort_name, sort_dir){
+        // -- Подсвечиваем
+        $('#catalog_sort_block [data-sort_name="'+sort_name+'"]')
+          .find('[data-srot_dir="'+sort_dir+'"]')
+          .addClass('_active_')
+          .siblings()
+          .removeClass('_active_')
+        // -- Подставляем значение
+        $('#catalog_sort_block [data-sort_name="'+sort_name+'"] input').val( sort_dir )
+      })
+    })
+    // sorting x
 
     //MODx pdoResources Ajax Filter
     //Filter Settings

@@ -7,8 +7,46 @@
   <title>msCatalogFilter</title>
 </head>
 <body>
+  <!-- Форма сортировки -->
+  <form class="catalog_sort_block" id="catalog_sort_block">
+    <div class="_title">
+      Сортировка:
+    </div>
+
+    <div class="_params">
+      <div class="_group_values" data-sort_name="Data.price">
+        <div class="_name">
+          Цена
+        </div>
+        <div class="_value _active_" data-srot_dir="ASC">
+          <i class="fas fa-sort-numeric-down"></i>
+        </div>
+        <div class="_value" data-srot_dir="DESC">
+          <i class="fas fa-sort-numeric-up"></i>
+        </div>
+
+        <input type="hidden" name="Data.price" value="ASC">
+      </div>
+
+      <div class="_group_values" data-sort_name="pagetitle">
+        <div class="_name">
+          Название
+        </div>
+        <div class="_value _active_" data-srot_dir="ASC">
+          <i class="fas fa-sort-alpha-down"></i>
+        </div>
+        <div class="_value" data-srot_dir="DESC">
+          <i class="fas fa-sort-alpha-up"></i>
+        </div>
+
+        <input type="hidden" name="pagetitle" value="ASC">
+      </div>
+    </div>
+  </form>
+  <!-- Форма сортировки х -->
+
   <!-- Форма фильтрации -->
-  <form class="ajax-form">
+  <form class="ajax-form" id="msCatalogFilterForm">
 
     <!-- Скрытие и раскрытие содержимого фильтров для удобства, с сохранением в локальное хранилище -->
     <script>
@@ -163,8 +201,11 @@
     <!-- Фильтрация товаров со скидкой (указанной старой ценой) х-->
 
     <!-- Sort Fields -->
-    <input type="hidden" name="sortby" value="pagetitle">
-    <input type="hidden" name="sortdir" value="asc">
+    {if $.session.msCatalogFilter.filter_data_sort }
+      <input type="hidden" name="sortby" value='{$.session.msCatalogFilter.filter_data_sort}'>
+    {else}
+      <input type="hidden" name="sortby" value="pagetitle">
+    {/if}
     <!-- Sort End -->
 
     <!-- <label>
@@ -189,20 +230,18 @@
   </form>
   <!-- Форма фильтрации х-->
 
-  <!-- Блок со списком элементов -->
+  <!-- Блок со списком ресурсов -->
   <div class="cooler_block ajax-container">
     [[!catalogFilter?
       &tpl=`filter-item`
       &limit=`8`
       &parents=`[[*id]]`
       &fields=`price`
-      &sortby=`menuindex`
-      &sortdir=`ASC`
     ]]
   </div>
-  <!-- Блок со списком элементов х-->
+  <!-- Блок со списком ресурсов х-->
 
-  <!-- Пример элемента (filter-item) -->
+  <!-- Пример ресурса  (tpl filter-item) -->
   <div class="ms2_product filter-item ajax-item">
     <form method="post" class="ms2_form d-flex flex-column flex-md-row align-items-center no-gutters">
       <input type="hidden" name="id" value="{$id}">
@@ -245,6 +284,6 @@
     	</div>
     </form>
   </div>
-  <!-- Пример элемента (filter-item) x-->
+  <!-- Пример ресурса  (tpl filter-item) x-->
 </body>
 </html>
