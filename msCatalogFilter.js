@@ -1,4 +1,19 @@
 $(function() {
+  //MODx pdoResources Ajax Filter
+  //Filter Settings
+  var fadeSpeed             = 200, // Fade Animation Speed
+      ajaxCountSelector     = '.ajax-count', // CSS Selector of Items Counter
+      ajaxContainerSelector = '.ajax-container', // CSS Selector of Ajax Container
+      ajaxItemSelector      = '.ajax-item', // CSS Selector of Ajax Item
+      ajaxFormSelector      = '.ajax-form', // CSS Selector of Ajax Filter Form
+      ajaxFormButtonStart   = '.ajax-start', // CSS Selector of Button Start Filtering
+      ajaxFormButtonReset   = '.ajax-reset', // CSS Selector of Button Reset Ajax Form
+      ajaxSearchSelector    = '.ajax-search', // CSS Selector for search
+      ajaxFormButtonMore    = '.ajax-more', // CSS Selector of more
+      sortDownText          = 'По убыванию',
+      sortUpText            = 'По возрастанию'
+
+    // - Events
     // vendor
     $(document).on('change', '[name="vendor"]', function(){
       var vendors = ''
@@ -7,9 +22,20 @@ $(function() {
           vendors += ',' + $(this).val()
       })
       $('#filter_vendors').val(vendors.substring(1))
-      $('.ajax-start').click()
+      $(ajaxFormButtonStart).click()
     })
     // vendor x
+
+    // search
+    var intervalSearch = ''
+    $(document).on('input', ajaxSearchSelector, function(){
+      clearTimeout(intervalSearch)
+
+      intervalSearch = setTimeout(function () {
+        $(ajaxFormButtonStart).click()
+      }, 500)
+    })
+    // search x
 
     // sorting
     // - Фильтрация по клику
@@ -29,11 +55,10 @@ $(function() {
       filter_data_sort += '}'
 
       // -- Сохраняем в фильтр и в сессию
-      console.log(filter_data_sort)
       $('#msCatalogFilterForm [name="sortby"]').val(filter_data_sort)
       $.post('/msCatalogFilter', {'filter_data_sort': filter_data_sort}, function(){
         // --- Фильтруем
-        $('.ajax-start').click()
+        $(ajaxFormButtonStart).click()
       })
     })
 
@@ -52,89 +77,79 @@ $(function() {
       })
     })
     // sorting x
+    // - Events x
 
-    //MODx pdoResources Ajax Filter
-    //Filter Settings
-    var fadeSpeed             = 200, // Fade Animation Speed
-        ajaxCountSelector     = '.ajax-count', // CSS Selector of Items Counter
-        ajaxContainerSelector = '.ajax-container', // CSS Selector of Ajax Container
-        ajaxItemSelector      = '.ajax-item', // CSS Selector of Ajax Item
-        ajaxFormSelector      = '.ajax-form', // CSS Selector of Ajax Filter Form
-        ajaxFormButtonStart   = '.ajax-start', // CSS Selector of Button Start Filtering
-        ajaxFormButtonReset   = '.ajax-reset', // CSS Selector of Button Reset Ajax Form
-        sortDownText          = 'По убыванию',
-        sortUpText            = 'По возрастанию';
-
+    // - Functions
     function ajaxCount() {
         if($('.ajax-filter-count').length) {
-            var count = $('.ajax-filter-count').data('count');
-            $(ajaxCountSelector).text(count);
+            var count = $('.ajax-filter-count').data('count')
+            $(ajaxCountSelector).text(count)
         } else {
-            $(ajaxCountSelector).text($(ajaxItemSelector).length);
+            $(ajaxCountSelector).text($(ajaxItemSelector).length)
         }
-    }ajaxCount();
+    }ajaxCount()
 
     function ajaxMainFunction() {
-        $('.ajax-container').addClass('_loading_');
+        $(ajaxContainerSelector).addClass('_loading_')
         $.ajax({
             data: $(ajaxFormSelector).serialize()
         }).done(function(response) {
-            $('.ajax-container').removeClass('_loading_');
-            var $response = $(response);
-            $(ajaxContainerSelector).fadeOut(fadeSpeed);
+            $(ajaxContainerSelector).removeClass('_loading_')
+            var $response = $(response)
+            $(ajaxContainerSelector).fadeOut(fadeSpeed)
             setTimeout(function() {
-                $(ajaxContainerSelector).html($response.find(ajaxContainerSelector).html()).fadeIn(fadeSpeed);
-                ajaxCount();
-            }, fadeSpeed);
-        });
+                $(ajaxContainerSelector).html($response.find(ajaxContainerSelector).html()).fadeIn(fadeSpeed)
+                ajaxCount()
+            }, fadeSpeed)
+        })
     }
 
-    $(ajaxContainerSelector).on('click', '.ajax-more', function(e) {
-        e.preventDefault();
+    $(ajaxContainerSelector).on('click', ajaxFormButtonMore, function(e) {
+        e.preventDefault()
 
-        var offset = $(ajaxItemSelector).length;
+        var offset = $(ajaxItemSelector).length
         $.ajax({
             data: $(ajaxFormSelector).serialize()+'&offset='+offset
         }).done(function(response) {
-            $('.ajax-more').remove();
-            var $response = $(response);
-            $response.find(ajaxItemSelector).hide();
-            $(ajaxContainerSelector).append($response.find(ajaxContainerSelector).html());
-            $(ajaxItemSelector).fadeIn();
-        });
+            $(ajaxFormButtonMore).remove()
+            var $response = $(response)
+            $response.find(ajaxItemSelector).hide()
+            $(ajaxContainerSelector).append($response.find(ajaxContainerSelector).html())
+            $(ajaxItemSelector).fadeIn()
+        })
     })
 
     $(ajaxFormButtonStart).click(function(e) {
-        e.preventDefault();
-        ajaxMainFunction();
+        e.preventDefault()
+        ajaxMainFunction()
     })
 
     $(ajaxFormButtonReset).click(function(e) {
-        e.preventDefault();
-        $(ajaxFormSelector).trigger('reset');
-        $('input[name=sortby]').val('pagetitle');
-        $('input[name=sortdir]').val('asc');
+        e.preventDefault()
+        $(ajaxFormSelector).trigger('reset')
+        $('input[name=sortby]').val('pagetitle')
+        $('input[name=sortdir]').val('asc')
         setTimeout(function() {
-            $('[data-sort-by]').data('sort-dir', 'asc').toggleClass('button-sort-asc').text(sortUpText);
-        }, fadeSpeed);
-        ajaxMainFunction();
-        ajaxCount();
+            $('[data-sort-by]').data('sort-dir', 'asc').toggleClass('button-sort-asc').text(sortUpText)
+        }, fadeSpeed)
+        ajaxMainFunction()
+        ajaxCount()
     })
 
     $(''+ajaxFormSelector+' input:not(.ajax-disabled)').change(function() {
-        ajaxMainFunction();
+        ajaxMainFunction()
     })
 
     $('[data-sort-by]').data('sort-dir', 'asc').click(function() {
-        var ths = $(this);
-        $('input[name=sortby]').val($(this).data('sort-by'));
-        $('input[name=sortdir]').val($(this).data('sort-dir'));
+        var ths = $(this)
+        $('input[name=sortby]').val($(this).data('sort-by'))
+        $('input[name=sortdir]').val($(this).data('sort-dir'))
         setTimeout(function() {
-            $('[data-sort-by]').not(this).toggleClass('button-sort-asc').text(sortUpText);
-            ths.data('sort-dir') == 'asc' ? ths.data('sort-dir', 'desc').text(sortDownText) : ths.data('sort-dir', 'asc').text(sortUpText);
-            $(this).toggleClass('button-sort-asc');
-        }, fadeSpeed);
-        ajaxMainFunction();
-    });
-
-});
+            $('[data-sort-by]').not(this).toggleClass('button-sort-asc').text(sortUpText)
+            ths.data('sort-dir') == 'asc' ? ths.data('sort-dir', 'desc').text(sortDownText) : ths.data('sort-dir', 'asc').text(sortUpText)
+            $(this).toggleClass('button-sort-asc')
+        }, fadeSpeed)
+        ajaxMainFunction()
+    })
+    // - Functions x
+})
