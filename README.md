@@ -1,5 +1,5 @@
 # msCatalogFilter
-Для работы нид pdoTools и minishop2, теоритический кутёж [[https://trywar.ru/3/173/|тут]]
+Для работы нид pdoTools и minishop2, теоритический кутёж [тут](https://trywar.ru/3/173/)
 
 # Возможности
 - Фильтрация товаров по TV, цене и опциям
