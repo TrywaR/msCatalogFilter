@@ -1,6 +1,12 @@
 # msCatalogFilter
 Для работы нид pdoTools и minishop2
 
+# Возможности
+- Фильтрация товаров по TV, цене и опциям
+- Фильрация товаров по категориям
+- Поиск товаров
+
+# Как использовать
 Поехали:
 
 * создаём сниппет _CatalogFilter_ и пихаем в него код из файла _CatalogFilter.php_
@@ -31,6 +37,7 @@ ajaxItemSelector      = '.ajax-item', // Элемент выдачи (tpl)
 ajaxFormSelector      = '.ajax-form', // Форма с фильтрами
 ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 ```
+Другие классы можно найти в начале файла _CatalogFilter.js_
 Класс _.ajax-disabled_ для _input_ отменяет его моментальную обработку при изменении его значения
 
 ## html
@@ -67,3 +74,16 @@ ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 
 # Поиск
 Для поиска надо добавить input с _.ajax-search_ в форму фильтра, или дублировать в него значения если поле поиска находится за пределами формы
+
+# Бонусы
+## Число товаров в каталоге _fenom_
+```
+{set $count = 'msProducts' | snippet : [
+    'parents' => $id,
+    'returnIds' => true,
+    'limit' => 0,
+]}
+
+{set $count = !$count ? 0 : $count | split | length}
+Все товары ({$count})
+```
