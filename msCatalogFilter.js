@@ -14,17 +14,6 @@ $(function() {
       sortUpText            = 'По возрастанию'
 
     // - Events
-    // vendor
-    $(document).on('change', '[name="vendor"]', function(){
-      var vendors = ''
-      $('[name="vendor"]').each(function(){
-        if (this.checked)
-          vendors += ',' + $(this).val()
-      })
-      $('#filter_vendors').val(vendors.substring(1))
-      $(ajaxFormButtonStart).click()
-    })
-    // vendor x
 
     // search
     var intervalSearch = ''

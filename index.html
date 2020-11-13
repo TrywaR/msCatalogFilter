@@ -74,9 +74,47 @@
 
     <!-- Поиск по названию товара -->
     <div class="input_block">
-      <input type="text" name="search" value="" class="ajax-search">
+      <div class="_values">
+        <input type="text" name="search" value="" class="ajax-search">
+      </div>
     </div>
     <!-- Поиск по названию товара х -->
+
+    <!-- Фильрация по категориям -->
+    <div class="input_block _hide_">
+      <div class="_title">
+        Категория
+      </div>
+
+      <div class="_values">
+        [[pdoMenu?
+          &parents=`[[*id]]`
+          &level=`1`
+          &tplOuter=`@INLINE [[+wrapper]]`
+          &tpl=`@INLINE
+          <label class="control control-checkbox">
+            <input class="ajax-disabled" name="parent" value="[[+id]]" type="checkbox"></input>
+            [[+menutitle]]
+            <div class="control_indicator"></div>
+          </label>`
+        ]]
+        <input id="parents" type="hidden" name="parents">
+
+        <script>
+          $(function(){
+            $(document).on('change', '[name="parent"]', function(){
+              var type_installations = ''
+              $('[name="parent"]').each(function(){
+                if (this.checked) type_installations += ',' + $(this).val()
+              })
+              $('#parents').val(type_installations.substring(1))
+              $('.ajax-start').click()
+            })
+          })
+        </script>
+      </div>
+    </div>
+    <!-- Фильрация по категориям х -->
 
     <!-- Фильтрация по цене с jQuery UI slider -->
     <div class="input_block _hide_">
