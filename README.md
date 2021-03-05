@@ -94,3 +94,18 @@ ajaxFormButtonStart   = '.ajax-start', // Старт фильтрации
 
 для того чтобы вывести возможные значения можно воспользоватся кодом из _TVsSelectValues.php_
 Он <strike>нагло сп</strike> скромно взят с замечательного блога http://mycode.in.ua/modx/snippets/list-tv-elements.html
+
+### Фильтрация по нескольним производителям
+Стандартным полем и функционалом MiniShop2 нельзя реализовать, по этому нужно добавить TV поле с типом ввода "Списк (Множественный выбор)"  
+В возможные значения добавляем производителей из MiniShop2
+```
+@EVAL return $modx->runSnippet('pdoResources', array(
+	'class' => 'msVendor',
+	'limit' => 30,
+	'tpl' => '@INLINE {$name}=={$id}',
+	'outputSeparator' => '||',
+	'sortby' => 'name',
+	'sortdir' => 'ASC',
+ ));
+```
+В файле `msCatalogFilter` за это отвечает блок в начале `more vendors` его нужно разкоментировать, и в нижних блоках в параметрых для вывода msProducts (переменные $params и $params_count) разкоментировать параметры `// 'tvFilters' => $sTvFilters,`

@@ -18,6 +18,25 @@ if(!empty($_REQUEST['search'])) $filter[] = "pagetitle LIKE '%".$_REQUEST['searc
 if(!empty($_REQUEST['vendors'])) $filter[] = "vendor IN (".$_REQUEST['vendors'].")";
 // vendors x
 
+// more vendors
+// $sTvFilters = '';
+// if (!empty($_REQUEST['vendors']) ) {
+//   // &tvFilters = "&tvFilters=`dop_vendor==one%,filter1==bar%||filter1==foo`"
+//   $parents = $_REQUEST['vendors'];
+//   $ArrParents = explode(',', $parents);
+//   if ( count($ArrParents) ) {
+//     $sSeporator = '';
+//     foreach ($ArrParents as $iParent) {
+//       $sTvFilters .= $sSeporator . "dop_vendor==%" . $iParent . '%';
+//       if ( $sTvFilters ) $sSeporator = '||';
+//     }
+//   }
+//   else {
+//     $sTvFilters .= "dop_vendor==" . $parents . '%';
+//   }
+// }
+// more vendors x
+
 // options filter
 $optionFilters = array(); # optionFilters
 
@@ -80,6 +99,7 @@ $params_count = array(
   'select' => 'id',
   'includeTVs' => $fields,
   'showHidden' => '1',
+  // 'tvFilters' => $sTvFilters,
   'where' => $where,
   'optionFilters' => $optionFiltersJson
 );
@@ -97,6 +117,7 @@ $params = array(
   'showHidden' => '1',
   'sortby' => $sortby,
   'sortdir' => $sortdir,
+  // 'tvFilters' => $sTvFilters,
   'where' => $where,
   'optionFilters' => $optionFiltersJson
 );
